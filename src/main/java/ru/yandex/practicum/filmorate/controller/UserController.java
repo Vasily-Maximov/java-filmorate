@@ -12,56 +12,26 @@ import ru.yandex.practicum.filmorate.model.CreateGroup;
 import ru.yandex.practicum.filmorate.model.UpdateGroup;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserValidationException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("/users")
-public class UserController {
-    private Map<Integer, User> users = new HashMap<>();
-    private int generatorId = 1;
+public class UserController extends Controllers<User> {
 
     @PostMapping
     public User createUser(@Validated(CreateGroup.class) @RequestBody User user) {
-        if (! user.getLogin().trim().contains(" ")) {
-            user.setId(generatorId++);
-            if (user.getName() == null) {
-                user.setName(user.getLogin());
-            }
-            if (user.getName().isBlank()){
-                user.setName(user.getLogin());
-            }
-            users.put(user.getId(), user);
-            log.info("Пользователь {} добавлен", user.getName());
-            return user;
-        } else {
-            log.info("Логин {} содержит пробел", user.getLogin());
-            throw new UserValidationException("Логин - " + user.getLogin() + " содержит пробел");
-        }
+        return super.create(user);
     }
 
     @PutMapping
-    public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) {
-        if (users.containsKey(user.getId())) {
-            if (! user.getLogin().trim().contains(" ")) {
-                log.info("Пользователь {}  - изменён", user.getName());
-                users.put(user.getId(), user);
-                return users.get(user.getId());
-            } else {
-                log.info("Логин {} содержит пробел", user.getLogin());
-                throw new UserValidationException("Логин - " + user.getLogin() + " содержит пробел");
-            }
-        } else {
-            log.error("Пользователь с id = {} не найден", user.getId());
-            throw new UserValidationException("Пользователь с id = " + user.getId() + " не найден");
-        }
+    public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) throws UserValidationException{
+        return super.update(user);
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
+        return super.getAll();
     }
+
 }
