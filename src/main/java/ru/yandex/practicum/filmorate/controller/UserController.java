@@ -25,7 +25,7 @@ public class UserController extends Controllers<User> {
     }
 
     @PutMapping
-    public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) throws UserValidationException{
+    public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) throws UserValidationException {
         return super.update(user);
     }
 
