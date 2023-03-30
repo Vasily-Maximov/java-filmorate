@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/films")
-public class FilmController extends Controllers<Film>{
+public class FilmController extends Controllers<Film> {
 
     @PostMapping
     public Film createFilm(@Validated(CreateGroup.class) @RequestBody Film film) {
