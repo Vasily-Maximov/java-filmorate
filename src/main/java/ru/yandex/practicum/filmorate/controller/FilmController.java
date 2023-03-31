@@ -21,6 +21,7 @@ import java.util.List;
 public class FilmController extends Controllers<Film> {
 
     private int id = 0;
+
     @PostMapping
     public Film createFilm(@Validated(CreateGroup.class) @RequestBody Film film) {
         film.setId(++id);
