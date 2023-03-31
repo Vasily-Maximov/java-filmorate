@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import ru.yandex.practicum.filmorate.model.CreateGroup;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.MessageStatus;
 import ru.yandex.practicum.filmorate.model.UpdateGroup;
-import ru.yandex.practicum.filmorate.service.FilmValidationException;
 
 import java.util.List;
 
@@ -20,13 +20,16 @@ import java.util.List;
 @RequestMapping("/films")
 public class FilmController extends Controllers<Film> {
 
+    private int id = 0;
     @PostMapping
     public Film createFilm(@Validated(CreateGroup.class) @RequestBody Film film) {
-        return super.create(film);
+        film.setId(++id);
+        log.info(String.format(MessageStatus.POST_FILM.getNameStatus(), film.getName()));
+        return super.create(film, film.getId());
     }
 
     @PutMapping
-    public Film updateFilm(@Validated(UpdateGroup.class) @RequestBody Film film) throws FilmValidationException {
+    public Film updateFilm(@Validated(UpdateGroup.class) @RequestBody Film film) {
         return super.update(film);
     }
 

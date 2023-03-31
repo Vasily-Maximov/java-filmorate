@@ -2,7 +2,8 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import ru.yandex.practicum.filmorate.service.FilmValidationException;
+import ru.yandex.practicum.filmorate.service.ObjectValidationException;
+
 import javax.validation.constraints.Null;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotBlank;
@@ -27,7 +28,7 @@ public class Film {
     @Positive(groups = {CreateGroup.class, UpdateGroup.class})
     private long duration;
 
-    public Film(Integer id, String name, String description, LocalDate releaseDate, long duration) throws FilmValidationException {
+    public Film(Integer id, String name, String description, LocalDate releaseDate, long duration) {
         checkReleaseDate(name, releaseDate);
         this.id = id;
         this.name = name;
@@ -36,11 +37,11 @@ public class Film {
         this.duration = duration;
     }
 
-    private void checkReleaseDate(String name, LocalDate releaseDate) throws FilmValidationException {
+    private void checkReleaseDate(String name, LocalDate releaseDate) {
         if (!BEGIN_DATE.isBefore(releaseDate)) {
             String messageError = String.format(MessageStatus.ERROR_DATE.getNameStatus(), name);
             log.error(messageError);
-            throw new FilmValidationException(messageError);
+            throw new ObjectValidationException(messageError);
         }
     }
 }

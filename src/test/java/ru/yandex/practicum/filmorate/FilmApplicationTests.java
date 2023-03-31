@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.CreateGroup;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.FilmValidationException;
+import ru.yandex.practicum.filmorate.service.ObjectValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -50,12 +50,12 @@ public class FilmApplicationTests {
         violations = validator.validate(film, CreateGroup.class);
         assertFalse(violations.isEmpty(), "Ошибка при создании фильма, 'description' должен быть не больше 200 символов");
 
-        FilmValidationException exception = assertThrows(
-                FilmValidationException.class,
+        ObjectValidationException exception = assertThrows(
+                ObjectValidationException.class,
                 () -> {
                     new Film(null,"Троя","Историко-приключенческая драма", LocalDate.of(1895,12,
                             29), 169);
-                    throw new FilmValidationException("ок");
+                    throw new ObjectValidationException("ок");
                 });
         assertEquals("ок", exception.getMessage(), "Ошибка при создании фильма, 'releaseDate' раньше 28 " +
                 "декабря 1895 года");
