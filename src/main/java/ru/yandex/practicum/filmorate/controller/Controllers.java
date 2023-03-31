@@ -20,7 +20,6 @@ public abstract class Controllers<T> {
         return new ArrayList<>(hashMap.values());
     }
 
-
     public T create(T variable, int id) {
         hashMap.put(id, variable);
         return variable;

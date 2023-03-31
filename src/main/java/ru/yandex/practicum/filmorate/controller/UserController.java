@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +19,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController extends Controllers<User> {
     private int id = 0;
+
     @PostMapping
     public User createUser(@Validated(CreateGroup.class) @RequestBody User user) {
         user.setId(++id);
