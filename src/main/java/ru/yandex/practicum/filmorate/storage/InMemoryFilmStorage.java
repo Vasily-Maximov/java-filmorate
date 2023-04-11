@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exeption.ObjectNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.MessageStatus;
-import ru.yandex.practicum.filmorate.exeption.ObjectValidationException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +43,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         } else {
             String messageError = String.format(MessageStatus.PUT_FILM_ERROR.getNameStatus(), film.getId());
             log.error(messageError);
-            throw new ObjectValidationException(messageError);
+            throw new ObjectNotFoundException(messageError);
         }
     }
 
