@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.CreateGroup;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.service.ObjectValidationException;
+import ru.yandex.practicum.filmorate.exeption.ObjectValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

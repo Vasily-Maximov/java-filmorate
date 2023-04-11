@@ -2,7 +2,7 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import ru.yandex.practicum.filmorate.service.ObjectValidationException;
+import ru.yandex.practicum.filmorate.exeption.ObjectValidationException;
 
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Email;
@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 @Data
@@ -18,6 +20,7 @@ public class User {
     @NotNull(groups = UpdateGroup.class)
     private Integer id;
     @Email(groups = {CreateGroup.class, UpdateGroup.class})
+    @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
     private String email;
     @NotBlank(groups = {CreateGroup.class, UpdateGroup.class})
     private String login;
@@ -25,6 +28,7 @@ public class User {
     @PastOrPresent(groups = {CreateGroup.class, UpdateGroup.class})
     @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
     private LocalDate birthday;
+    private Set<Long> friends = new HashSet<>();
 
     public User(Integer id, String email, String login, String name, LocalDate birthday) {
         checkLogin(login);
