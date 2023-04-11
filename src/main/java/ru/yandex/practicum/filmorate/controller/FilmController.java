@@ -81,5 +81,4 @@ public class FilmController {
     public ErrorResponse handleIncorrectParameter(final NumberFormatException e) {
         return new ErrorResponse(String.format("Некорректно передан параметр: %s", e.getMessage()));
     }
-
 }

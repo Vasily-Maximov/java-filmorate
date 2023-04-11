@@ -54,5 +54,4 @@ public class User {
             throw new ObjectValidationException(messageError);
         }
     }
-
 }
