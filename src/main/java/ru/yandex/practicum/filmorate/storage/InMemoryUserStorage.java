@@ -49,8 +49,8 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User findById(Integer id) {
-        return users.values().stream().filter(user -> user.getId().equals(id)).findFirst().
-                orElseThrow(() -> new ObjectNotFoundException(String.format(MessageStatus.PUT_USER_ERROR.getNameStatus(), id)));
+        return users.values().stream().filter(user -> user.getId().equals(id)).findFirst()
+                .orElseThrow(() -> new ObjectNotFoundException(String.format(MessageStatus.PUT_USER_ERROR.getNameStatus(), id)));
     }
 
     @Override
