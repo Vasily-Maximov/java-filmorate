@@ -49,8 +49,8 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film findById(Integer id) {
-        return films.values().stream().filter(film -> film.getId().equals(id)).findFirst().
-                orElseThrow(() -> new ObjectValidationException(String.format(MessageStatus.PUT_FILM_ERROR.getNameStatus(), id)));
+        return films.values().stream().filter(film -> film.getId().equals(id)).findFirst()
+                .orElseThrow(() -> new ObjectValidationException(String.format(MessageStatus.PUT_FILM_ERROR.getNameStatus(), id)));
     }
 
     @Override
