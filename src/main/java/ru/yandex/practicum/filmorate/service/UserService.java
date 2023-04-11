@@ -41,7 +41,7 @@ public class UserService {
     public List<User> findFriendsById(Integer userId) {
         User user = userStorage.findById(userId);
         List<User> users = new ArrayList<>();
-        for(Long value: user.getFriends()) {
+        for (Long value: user.getFriends()) {
             users.add(userStorage.findById(value.intValue()));
         }
         return users;

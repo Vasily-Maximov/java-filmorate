@@ -37,7 +37,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public void update(User user) {
-        if(users.get(user.getId()) != null) {
+        if (users.get(user.getId()) != null) {
             log.info(String.format(MessageStatus.PUT_USER.getNameStatus(), user.getName()));
             users.put(user.getId(), user);
         } else {

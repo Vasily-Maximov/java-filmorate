@@ -37,7 +37,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public void update(Film film) {
-        if(films.get(film.getId()) != null) {
+        if (films.get(film.getId()) != null) {
             log.info(String.format(MessageStatus.PUT_FILM.getNameStatus(), film.getName()));
             films.put(film.getId(), film);
         } else {
