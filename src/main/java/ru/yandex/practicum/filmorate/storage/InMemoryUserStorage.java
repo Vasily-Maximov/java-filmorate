@@ -7,54 +7,38 @@ import ru.yandex.practicum.filmorate.model.MessageStatus;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Slf4j
-public class InMemoryUserStorage implements UserStorage {
-
-    private final Map<Integer, User> users = new HashMap<>();
-    private static Integer globalId = 0;
-
-    private static Integer getNextId() {
-        return ++globalId;
-    }
+public class InMemoryUserStorage extends AbstractStorage<User> implements UserStorage {
 
     @Override
     public void create(User user) {
         log.info(String.format(MessageStatus.POST_USER.getNameStatus(), user.getName()));
-        user.setId(getNextId());
-        users.put(user.getId(), user);
+        super.create(user);
     }
 
     @Override
     public void delete(User user) {
         log.info(String.format(MessageStatus.DELETE_USER.getNameStatus(), user.getName()));
-        users.remove(user.getId());
+        super.delete(user);
     }
 
     @Override
     public void update(User user) {
-        if (users.get(user.getId()) != null) {
-            log.info(String.format(MessageStatus.PUT_USER.getNameStatus(), user.getName()));
-            users.put(user.getId(), user);
-        } else {
-            String messageError = String.format(MessageStatus.PUT_USER_ERROR.getNameStatus(), user.getId());
-            log.error(messageError);
-            throw new ObjectNotFoundException(messageError);
-        }
+        log.info(String.format(MessageStatus.PUT_USER.getNameStatus(), user.getName()));
+        super.update(user, MessageStatus.PUT_USER_ERROR.getNameStatus());
     }
 
     @Override
     public User findById(Integer id) {
-        return users.values().stream().filter(user -> user.getId().equals(id)).findFirst()
+        return super.findByIdModel(id)
                 .orElseThrow(() -> new ObjectNotFoundException(String.format(MessageStatus.PUT_USER_ERROR.getNameStatus(), id)));
     }
 
     @Override
     public List<User> getAll() {
-        return new ArrayList<>(users.values());
+        return new ArrayList<>(super.getAll());
     }
 }

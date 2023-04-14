@@ -25,7 +25,8 @@ public class FilmService {
 
     public void addLike(Integer filmId, Integer userId) {
         Film film = filmStorage.findById(filmId);
-        film.getLikes().add(userId.longValue());
+        User user = userStorage.findById(userId);
+        film.getLikes().add(user.getId().longValue());
         filmStorage.update(film);
     }
 
@@ -41,5 +42,9 @@ public class FilmService {
                 .sorted(Comparator.comparingInt(f -> -1 * f.getLikes().size()))
                 .limit(count)
                 .collect(Collectors.toList());
+    }
+
+    public FilmStorage getFilmStorage() {
+        return filmStorage;
     }
 }

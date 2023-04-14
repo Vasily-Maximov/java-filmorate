@@ -5,10 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -39,24 +37,15 @@ public class UserService {
     }
 
     public List<User> findFriendsById(Integer userId) {
-        User user = userStorage.findById(userId);
-        List<User> users = new ArrayList<>();
-        for (Long value: user.getFriends()) {
-            users.add(userStorage.findById(value.intValue()));
-        }
-        return users;
+        return userStorage.findById(userId).getFriends().stream().map(aLong -> userStorage.findById(aLong.intValue()))
+                .collect(Collectors.toList());
     }
 
     public List<User> findOtherFriendsById(Integer userId, Integer otherId) {
-        List<User> mutualFriends = new ArrayList<>();
-        User userOne = userStorage.findById(userId);
-        User userTwo = userStorage.findById(otherId);
-        Set<Long> friendsUserOne = new HashSet<>(userOne.getFriends());
-        Set<Long> friendsUserTwo = userTwo.getFriends();
-        friendsUserOne.retainAll(friendsUserTwo);
-        for (Long friend : friendsUserOne) {
-            mutualFriends.add(userStorage.findById(friend.intValue()));
-        }
-        return mutualFriends;
+        return  findFriendsById(userId).stream().filter(findFriendsById(otherId)::contains).collect(Collectors.toList());
+    }
+
+    public UserStorage getUserStorage() {
+        return userStorage;
     }
 }

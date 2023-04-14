@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.exeption.ObjectValidationException;
 
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
@@ -15,10 +14,8 @@ import java.util.Set;
 
 @Slf4j
 @Data
-public class User {
-    @Null(groups = CreateGroup.class)
-    @NotNull(groups = UpdateGroup.class)
-    private Integer id;
+public class User extends AbstractModel {
+
     @Email(groups = {CreateGroup.class, UpdateGroup.class})
     @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
     private String email;
@@ -32,7 +29,7 @@ public class User {
 
     public User(Integer id, String email, String login, String name, LocalDate birthday) {
         checkLogin(login);
-        this.id = id;
+        super.setId(id);
         this.email = email;
         this.login = login;
         this.name = checkName(name);

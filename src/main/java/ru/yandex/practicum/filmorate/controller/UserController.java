@@ -18,43 +18,42 @@ import ru.yandex.practicum.filmorate.model.CreateGroup;
 import ru.yandex.practicum.filmorate.model.ErrorResponse;
 import ru.yandex.practicum.filmorate.model.UpdateGroup;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.model.MessageStatus;
 import ru.yandex.practicum.filmorate.service.UserService;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
 import java.util.List;
 
 @Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     private final UserService userService;
-    private final UserStorage userStorage;
 
     @Autowired
-    public UserController(UserService userService, UserStorage userStorage) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userStorage = userStorage;
     }
 
     @PostMapping
     public User createUser(@Validated(CreateGroup.class) @RequestBody User user) {
-        userStorage.create(user);
+        userService.getUserStorage().create(user);
         return user;
     }
 
     @PutMapping
     public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) {
-        userStorage.update(user);
-        return userStorage.findById(user.getId());
+        userService.getUserStorage().update(user);
+        return userService.getUserStorage().findById(user.getId());
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return userStorage.getAll();
+        return userService.getUserStorage().getAll();
     }
 
     @GetMapping("/{id}")
     public User findById(@PathVariable(value = "id") Integer idUser) {
-        return userStorage.findById(idUser);
+        return userService.getUserStorage().findById(idUser);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
@@ -80,6 +79,7 @@ public class UserController {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleIncorrectParameter(final NumberFormatException e) {
-        return new ErrorResponse(String.format("Некорректно передан параметр: %s", e.getMessage()));
+        log.info(String.format(MessageStatus.ERROR_PARAMETER.getNameStatus(), e.getMessage()));
+        return new ErrorResponse(String.format(MessageStatus.ERROR_PARAMETER.getNameStatus(), e.getMessage()));
     }
 }

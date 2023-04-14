@@ -19,9 +19,8 @@ import ru.yandex.practicum.filmorate.model.CreateGroup;
 import ru.yandex.practicum.filmorate.model.ErrorResponse;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.UpdateGroup;
+import ru.yandex.practicum.filmorate.model.MessageStatus;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.storage.FilmStorage;
-import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
 
 import java.util.List;
 
@@ -31,34 +30,32 @@ import java.util.List;
 public class FilmController {
 
     private final FilmService filmService;
-    private final FilmStorage filmStorage;
 
     @Autowired
-    public FilmController(FilmService filmService, InMemoryFilmStorage inMemoryFilmStorage) {
+    public FilmController(FilmService filmService) {
         this.filmService = filmService;
-        this.filmStorage = inMemoryFilmStorage;
     }
 
     @PostMapping
     public Film createFilm(@Validated(CreateGroup.class) @RequestBody Film film) {
-        filmStorage.create(film);
+        filmService.getFilmStorage().create(film);
         return film;
     }
 
     @PutMapping
     public Film updateFilm(@Validated(UpdateGroup.class) @RequestBody Film film) {
-        filmStorage.update(film);
-        return filmStorage.findById(film.getId());
+        filmService.getFilmStorage().update(film);
+        return filmService.getFilmStorage().findById(film.getId());
     }
 
     @GetMapping
     public List<Film> getAllFilms() {
-        return filmStorage.getAll();
+        return filmService.getFilmStorage().getAll();
     }
 
     @GetMapping("/{id}")
     public Film findById(@PathVariable(value = "id") Integer idFilm) {
-        return filmStorage.findById(idFilm);
+        return filmService.getFilmStorage().findById(idFilm);
     }
 
     @PutMapping("/{id}/like/{userId}")
@@ -79,6 +76,7 @@ public class FilmController {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleIncorrectParameter(final NumberFormatException e) {
-        return new ErrorResponse(String.format("Некорректно передан параметр: %s", e.getMessage()));
+        log.info(String.format(MessageStatus.ERROR_PARAMETER.getNameStatus(), e.getMessage()));
+        return new ErrorResponse(String.format(MessageStatus.ERROR_PARAMETER.getNameStatus(), e.getMessage()));
     }
 }

@@ -7,54 +7,38 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.MessageStatus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Slf4j
-public class InMemoryFilmStorage implements FilmStorage {
-
-    private final Map<Integer, Film> films = new HashMap<>();
-    private static Integer globalId = 0;
-
-    private static Integer getNextId() {
-        return ++globalId;
-    }
+public class InMemoryFilmStorage extends AbstractStorage<Film> implements FilmStorage {
 
     @Override
     public void create(Film film) {
         log.info(String.format(MessageStatus.POST_FILM.getNameStatus(), film.getName()));
-        film.setId(getNextId());
-        films.put(globalId, film);
+        super.create(film);
     }
 
     @Override
     public void delete(Film film) {
         log.info(String.format(MessageStatus.DELETE_FILM.getNameStatus(), film.getName()));
-        films.remove(film.getId());
+        super.delete(film);
     }
 
     @Override
     public void update(Film film) {
-        if (films.get(film.getId()) != null) {
-            log.info(String.format(MessageStatus.PUT_FILM.getNameStatus(), film.getName()));
-            films.put(film.getId(), film);
-        } else {
-            String messageError = String.format(MessageStatus.PUT_FILM_ERROR.getNameStatus(), film.getId());
-            log.error(messageError);
-            throw new ObjectNotFoundException(messageError);
-        }
+        log.info(String.format(MessageStatus.PUT_FILM.getNameStatus(), film.getName()));
+        super.update(film, MessageStatus.PUT_FILM_ERROR.getNameStatus());
     }
 
     @Override
     public Film findById(Integer id) {
-        return films.values().stream().filter(film -> film.getId().equals(id)).findFirst()
+        return super.findByIdModel(id)
                 .orElseThrow(() -> new ObjectNotFoundException(String.format(MessageStatus.PUT_FILM_ERROR.getNameStatus(), id)));
     }
 
     @Override
     public List<Film> getAll() {
-        return new ArrayList<>(films.values());
+        return new ArrayList<>(super.getAll());
     }
 }

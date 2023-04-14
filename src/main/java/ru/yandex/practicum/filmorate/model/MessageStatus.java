@@ -10,7 +10,8 @@ public enum MessageStatus {
     PUT_USER("Пользователь %s - изменён"),
     PUT_USER_ERROR("Пользователь с id = %d не найден"),
     ERROR_DATE("Дата релиза фильма: %s раньше 28 декабря 1895 года"),
-    ERROR_LOGIN("Логин := %s содержит пробел");
+    ERROR_LOGIN("Логин := %s содержит пробел"),
+    ERROR_PARAMETER("Некорректно передан параметр: %s");
     private final String nameStatus;
 
     MessageStatus(String nameStatus) {
