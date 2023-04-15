@@ -23,14 +23,14 @@ public class FilmService extends AbstractService<Film> {
 
     public void addLike(Integer filmId, Integer userId) {
         Film film = super.findById(filmId);
-        User user = userStorage.findById(userId);
-        film.getLikes().add(user.getId().longValue());
+        userStorage.findById(userId);
+        film.getLikes().add(userId.longValue());
     }
 
     public void delLike(Integer filmId, Integer userId) {
         Film film = super.findById(filmId);
-        User user = userStorage.findById(userId);
-        film.getLikes().remove(user.getId().longValue());
+        userStorage.findById(userId);
+        film.getLikes().remove(userId.longValue());
     }
 
     public List<Film> findPopularFilms(Integer count) {
