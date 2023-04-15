@@ -6,7 +6,6 @@ import ru.yandex.practicum.filmorate.model.AbstractModel;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -40,8 +39,8 @@ public abstract class AbstractStorage<T extends AbstractModel> {
         }
     }
 
-    public Optional<T> findByIdModel(Integer id) {
-        return hashMapModel.values().stream().filter(variable -> variable.getId().equals(id)).findFirst();
+    public T findById(Integer id) {
+        return hashMapModel.get(id);
     }
 
     public List<T> getAll() {

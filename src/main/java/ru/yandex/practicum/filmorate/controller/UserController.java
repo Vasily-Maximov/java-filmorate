@@ -36,43 +36,57 @@ public class UserController {
 
     @PostMapping
     public User createUser(@Validated(CreateGroup.class) @RequestBody User user) {
-        userService.getUserStorage().create(user);
+        log.info(String.format(MessageStatus.POST_USER.getNameStatus(), user.getName()));
+        userService.create(user);
         return user;
     }
 
     @PutMapping
     public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) {
-        userService.getUserStorage().update(user);
-        return userService.getUserStorage().findById(user.getId());
+        log.info(String.format(MessageStatus.PUT_USER.getNameStatus(), user.getName()));
+        userService.update(user, MessageStatus.PUT_USER_ERROR.getNameStatus());
+        return userService.findById(user.getId());
     }
 
     @GetMapping
     public List<User> getAllUsers() {
-        return userService.getUserStorage().getAll();
+        log.info(MessageStatus.GET_ALL_USER.getNameStatus());
+        return userService.getAll();
     }
 
     @GetMapping("/{id}")
     public User findById(@PathVariable(value = "id") Integer idUser) {
-        return userService.getUserStorage().findById(idUser);
+        log.info(String.format(MessageStatus.GET_USER_BY_ID.getNameStatus(), idUser));
+        return userService.findById(idUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delById(@PathVariable(value = "id") Integer idUser) {
+        log.info(String.format(MessageStatus.DELETE_USER.getNameStatus(), idUser));
+        userService.delete(idUser);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
     public void addToFriends(@PathVariable(value = "id") Integer userId, @PathVariable Integer friendId) {
+        log.info(String.format(MessageStatus.PUT_USER_FRIEND.getNameStatus(), userId, friendId));
         userService.addToFriends(userId, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
     public void delToFriends(@PathVariable(value = "id") Integer userId, @PathVariable Integer friendId) {
+        log.info(String.format(MessageStatus.DELETE_USER_FRIEND.getNameStatus(), userId, friendId));
         userService.delToFriends(userId, friendId);
     }
 
     @GetMapping("/{id}/friends")
     public List<User> findFriendsById(@PathVariable(value = "id") Integer userId) {
+        log.info(String.format(MessageStatus.GET_USER_FRIEND.getNameStatus(), userId));
         return userService.findFriendsById(userId);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
     public List<User> findOtherFriendsById(@PathVariable(value = "id") Integer userId, @PathVariable Integer otherId) {
+        log.info(String.format(MessageStatus.GET_FRIENDS.getNameStatus(), userId, otherId));
         return userService.findOtherFriendsById(userId, otherId);
     }
 

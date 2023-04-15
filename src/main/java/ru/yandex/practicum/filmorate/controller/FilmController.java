@@ -38,38 +38,51 @@ public class FilmController {
 
     @PostMapping
     public Film createFilm(@Validated(CreateGroup.class) @RequestBody Film film) {
-        filmService.getFilmStorage().create(film);
+        log.info(String.format(MessageStatus.POST_FILM.getNameStatus(), film.getName()));
+        filmService.create(film);
         return film;
     }
 
     @PutMapping
     public Film updateFilm(@Validated(UpdateGroup.class) @RequestBody Film film) {
-        filmService.getFilmStorage().update(film);
-        return filmService.getFilmStorage().findById(film.getId());
+        log.info(String.format(MessageStatus.PUT_FILM.getNameStatus(), film.getName()));
+        filmService.update(film, MessageStatus.PUT_FILM_ERROR.getNameStatus());
+        return filmService.findById(film.getId());
     }
 
     @GetMapping
     public List<Film> getAllFilms() {
-        return filmService.getFilmStorage().getAll();
+        log.info(MessageStatus.GET_ALL_FILMS.getNameStatus());
+        return filmService.getAll();
     }
 
     @GetMapping("/{id}")
     public Film findById(@PathVariable(value = "id") Integer idFilm) {
-        return filmService.getFilmStorage().findById(idFilm);
+        log.info(String.format(MessageStatus.GET_FILM_BY_ID.getNameStatus(), idFilm));
+        return filmService.findById(idFilm);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delById(@PathVariable(value = "id") Integer idFilm) {
+        log.info(String.format(MessageStatus.DELETE_FILM.getNameStatus(), idFilm));
+        filmService.delete(idFilm);
     }
 
     @PutMapping("/{id}/like/{userId}")
     public void addLike(@PathVariable(value = "id") Integer filmId, @PathVariable Integer userId) {
+        log.info(String.format(MessageStatus.PUT_LIKE_FILM.getNameStatus(), userId, filmId));
         filmService.addLike(filmId, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
     public void delLike(@PathVariable(value = "id") Integer filmId, @PathVariable Integer userId) {
+        log.info(String.format(MessageStatus.DELETE_LIKE_FILM.getNameStatus(), userId, filmId));
         filmService.delLike(filmId, userId);
     }
 
     @GetMapping("/popular")
     public List<Film> findPopularFilms(@RequestParam(defaultValue = "10", required = false) Integer count) {
+        log.info(String.format(MessageStatus.GET_POPULAR_FILM.getNameStatus(), count));
         return filmService.findPopularFilms(count);
     }
 
