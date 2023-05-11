@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.yandex.practicum.filmorate.model.CreateGroup;
 import ru.yandex.practicum.filmorate.model.UpdateGroup;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.service.ObjectValidationException;
+import ru.yandex.practicum.filmorate.exeption.ObjectValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

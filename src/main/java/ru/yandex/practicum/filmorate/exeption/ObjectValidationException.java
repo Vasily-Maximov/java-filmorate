@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.service;
+package ru.yandex.practicum.filmorate.exeption;
 
 public class ObjectValidationException extends RuntimeException {
     public ObjectValidationException(String message) {
