@@ -2,7 +2,7 @@
 Template repository for Filmorate project.
 ![Иллюстрация к проекту](https://github.com/Vasily-Maximov/java-filmorate/blob/main/db_diagram.png)
 
-Пример запросов:
+
 -- вывести все фильмы с рейтингами по убыванию
 select f."name" , count(l.user_id) as count_likes  from films as f join likes l ON f.id = l.film_id group by f."name" order by count_likes  desc; 
 
