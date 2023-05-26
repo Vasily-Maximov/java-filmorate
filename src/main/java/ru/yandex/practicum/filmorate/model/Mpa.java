@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Setter
 @Getter
-public class Mpa extends AbstractModel{
+public class Mpa extends AbstractModel {
 
     @NotNull(groups = {CreateGroup.class, UpdateGroup.class})
     private String name;
