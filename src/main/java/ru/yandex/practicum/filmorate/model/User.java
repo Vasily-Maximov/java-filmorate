@@ -1,9 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import ru.yandex.practicum.filmorate.exeption.ObjectValidationException;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
@@ -14,6 +14,7 @@ import java.util.Set;
 
 @Slf4j
 @Data
+@EqualsAndHashCode
 public class User extends AbstractModel {
 
     @Email(groups = {CreateGroup.class, UpdateGroup.class})

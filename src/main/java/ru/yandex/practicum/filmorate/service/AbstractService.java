@@ -1,15 +1,14 @@
 package ru.yandex.practicum.filmorate.service;
 
 import ru.yandex.practicum.filmorate.model.AbstractModel;
-import ru.yandex.practicum.filmorate.storage.AbstractStorage;
-
+import ru.yandex.practicum.filmorate.storage.dao.AbstractDbStorage;
 import java.util.List;
 
 public abstract class AbstractService<T extends AbstractModel> {
 
-    private final AbstractStorage<T> storage;
+    protected final AbstractDbStorage<T> storage;
 
-    public AbstractService(AbstractStorage<T> storage) {
+    public AbstractService(AbstractDbStorage<T> storage) {
         this.storage = storage;
     }
 
@@ -17,8 +16,8 @@ public abstract class AbstractService<T extends AbstractModel> {
         storage.create(variable);
     }
 
-    public void update(T variable, String message) {
-        storage.update(variable, message);
+    public void update(T variable) {
+        storage.update(variable);
     }
 
     public T findById(Integer id) {
