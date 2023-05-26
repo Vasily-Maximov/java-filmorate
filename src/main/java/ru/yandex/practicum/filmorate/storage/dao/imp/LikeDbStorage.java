@@ -16,14 +16,14 @@ public class LikeDbStorage {
         this.filmDbStorage = filmDbStorage;
     }
 
-    public void addLike(int film_id, int user_id) {
+    public void addLike(int filmId, int userIid) {
         String sqlQuery = "INSERT INTO likes (film_id, user_id) VALUES(?, ?)";
-        jdbcTemplate.update(sqlQuery, film_id, user_id);
+        jdbcTemplate.update(sqlQuery, filmId, userIid);
     }
 
-    public void delLike(int film_id, int user_id) {
+    public void delLike(int filmId, int userIid) {
         String sqlQuery = "DELETE FROM likes WHERE film_id = ? and user_id = ?";
-        jdbcTemplate.update(sqlQuery, film_id, user_id);
+        jdbcTemplate.update(sqlQuery, filmId, userIid);
     }
 
     public List<Film> findPopularFilms(Integer count) {
