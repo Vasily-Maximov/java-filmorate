@@ -17,6 +17,7 @@ public abstract class AbstractService<T extends AbstractModel> {
     }
 
     public void update(T variable) {
+        findById(variable.getId());
         storage.update(variable);
     }
 

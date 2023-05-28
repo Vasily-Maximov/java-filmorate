@@ -43,7 +43,6 @@ public class UserController {
 
     @PutMapping
     public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) {
-        userService.findById(user.getId());
         log.info(String.format(MessageStatus.PUT_USER.getNameStatus(), user.getName()));
         userService.update(user);
         return user;

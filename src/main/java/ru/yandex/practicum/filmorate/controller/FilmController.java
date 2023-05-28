@@ -44,7 +44,6 @@ public class FilmController {
 
     @PutMapping
     public Film updateFilm(@Validated(UpdateGroup.class) @RequestBody Film film) {
-        filmService.findById(film.getId());
         log.info(String.format(MessageStatus.PUT_FILM.getNameStatus(), film.getName()));
         filmService.update(film);
         return film;
