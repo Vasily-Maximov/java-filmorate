@@ -109,7 +109,6 @@ public class FilmDbStorage extends AbstractDbStorage<Film> implements FilmStorag
                 ps.setInt(1, film.getId());
                 ps.setInt(2, genres.get(i).getId());
             }
-            
             public int getBatchSize() {
                 return genres.size();
             }
