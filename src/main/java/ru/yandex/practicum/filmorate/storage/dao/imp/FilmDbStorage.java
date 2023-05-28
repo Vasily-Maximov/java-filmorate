@@ -105,10 +105,13 @@ public class FilmDbStorage extends AbstractDbStorage<Film> implements FilmStorag
         String sqlQuery = "INSERT INTO film_genres(film_id, genre_id) VALUES (?, ?)";
         List<Genre> genres = new ArrayList<>(film.getGenres());
         jdbcTemplate.batchUpdate(sqlQuery, new BatchPreparedStatementSetter() {
+            @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setInt(1, film.getId());
                 ps.setInt(2, genres.get(i).getId());
             }
+
+            @Override
             public int getBatchSize() {
                 return genres.size();
             }
