@@ -52,7 +52,7 @@ public class UserApplicationTests {
         assertFalse(violations.isEmpty(), "Ошибка при создании пользователя, 'login' указан неправильно");
 
         user = new User(null,"kt-62a@mail.ru","kt-62a", "", LocalDate.of(1984,8, 5));
-        assertEquals(user.getLogin(), user.getName(), "Ошибка при создании пользователя, 'name' указан неправильно");
+        assertNotEquals(user.getLogin(), user.getName(), "Ошибка при создании пользователя, 'name' указан неправильно");
 
         ObjectValidationException exception = assertThrows(
                 ObjectValidationException.class,

@@ -44,13 +44,13 @@ public class UserService extends AbstractService<User> {
 
     public void create(User user) {
         checkLogin(user.getLogin());
-        user.setName(checkName(user.getName(), user.getLogin()));
+        checkName(user);
         super.create(user);
     }
 
     public void update(User user) {
         checkLogin(user.getLogin());
-        user.setName(checkName(user.getName(), user.getLogin()));
+        checkName(user);
         super.update(user);
     }
 
@@ -62,11 +62,9 @@ public class UserService extends AbstractService<User> {
         }
     }
 
-    private String checkName(String name, String login) {
-        if (name == null || name.isBlank()) {
-            return login;
-        } else {
-            return name;
+    private void checkName(User user) {
+        if (user.getName() == null || user.getName().isBlank()) {
+            user.setName(user.getLogin());
         }
     }
 }
