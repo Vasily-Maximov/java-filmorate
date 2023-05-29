@@ -22,7 +22,20 @@ public enum MessageStatus {
     GET_FRIENDS("Вывод общих друзей пользователя с id = %d и id %d"),
     ERROR_DATE("Дата релиза фильма: %s раньше 28 декабря 1895 года"),
     ERROR_LOGIN("Логин := %s содержит пробел"),
-    ERROR_PARAMETER("Некорректно передан параметр: %s");
+    ERROR_PARAMETER("Некорректно передан параметр: %s"),
+    GET_ALL_GENRE("Вывод всех жанров"),
+    GET_GENRE_BY_ID("Вывод жанра по id = %d"),
+    GET_GENRE_ERROR("Жанр с id = %d не найден"),
+    POST_GENRE("Жанр %s добавлен"),
+    DELETE_GENRE("Жанр с id = %d удалён"),
+    PUT_GENRE("Жанр %s - изменён"),
+    GET_ALL_MPA("Вывод всех MPA"),
+    GET_MPA_BY_ID("Вывод MPA по id = %d"),
+    GET_MPA_ERROR("MPA с id = %d не найден"),
+    POST_MPA("MPA %s добавлен"),
+    DELETE_MPA("MPA с id = %d удалён"),
+    PUT_MPA("MPA %s - изменён");
+
     private final String nameStatus;
 
     MessageStatus(String nameStatus) {

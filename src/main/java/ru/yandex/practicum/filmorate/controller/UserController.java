@@ -44,8 +44,8 @@ public class UserController {
     @PutMapping
     public User updateUser(@Validated(UpdateGroup.class) @RequestBody User user) {
         log.info(String.format(MessageStatus.PUT_USER.getNameStatus(), user.getName()));
-        userService.update(user, MessageStatus.PUT_USER_ERROR.getNameStatus());
-        return userService.findById(user.getId());
+        userService.update(user);
+        return user;
     }
 
     @GetMapping

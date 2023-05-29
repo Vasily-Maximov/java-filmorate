@@ -21,7 +21,6 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.UpdateGroup;
 import ru.yandex.practicum.filmorate.model.MessageStatus;
 import ru.yandex.practicum.filmorate.service.FilmService;
-
 import java.util.List;
 
 @Slf4j
@@ -46,8 +45,8 @@ public class FilmController {
     @PutMapping
     public Film updateFilm(@Validated(UpdateGroup.class) @RequestBody Film film) {
         log.info(String.format(MessageStatus.PUT_FILM.getNameStatus(), film.getName()));
-        filmService.update(film, MessageStatus.PUT_FILM_ERROR.getNameStatus());
-        return filmService.findById(film.getId());
+        filmService.update(film);
+        return film;
     }
 
     @GetMapping
